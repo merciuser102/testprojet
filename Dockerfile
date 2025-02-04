@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     unzip \
     git \
     curl \
-    libpq-dev \  
+    libpq-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # تثبيت إضافات PHP المطلوبة
@@ -47,3 +47,9 @@ RUN docker-php-ext-install pgsql pdo_pgsql
 
 # تشغيل Nginx و php-fpm معًا
 CMD service nginx start && php-fpm
+
+
+RUN mkdir -p /var/www/storage /var/www/bootstrap/cache \
+    && chown -R www-data:www-data /var/www \
+    && chmod -R 755 /var/www/storage \
+    && chmod -R 755 /var/www/bootstrap/cache
